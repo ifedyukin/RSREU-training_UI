@@ -571,6 +571,7 @@ a#settings_button div {
 
 .popup {
   position: fixed;
+  z-index: 9;
   width: 100%;
   height: 100%;
   top: 0;
@@ -591,6 +592,8 @@ a#settings_button div {
   margin: auto;
   background: white;
   overflow: auto;
+  min-width: 490px;
+  z-index: 10;
 }
 
 #preview {
