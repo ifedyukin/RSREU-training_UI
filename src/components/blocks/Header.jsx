@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default function Header(props) {
-  return (<header>
+export const Header = () => (
+  <header>
     <div id="top_menu">
       <div className="top_profile">
         <div className="avatar"></div>
@@ -14,5 +14,5 @@ export default function Header(props) {
         <a>Our Support</a>
       </div>
     </div>
-  </header>);
-}
+  </header>
+);

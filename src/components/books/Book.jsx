@@ -1,24 +1,11 @@
 import React from 'react';
+import { Stars } from './Stars';
 
-const Stars = ({ stars, update }) => (
-  <div className="stars">
-    {[5, 4, 3, 2, 1].map(star => (
-      <div
-        key={star}
-        onClick={() => update(star)}
-        className={`stars__star${star <= stars ? ' stars__star--full' : ' stars__star--zero'}`}
-      />
-    ))}
+export const Book = ({ img, title, author, stars, updateBook, editBook }) => (
+  <div className="book">
+    <div onClick={editBook} className="book_pic"><img src={`/books/${img}`} alt="cover" /></div>
+    <div onClick={editBook} className="book_title">{title}</div>
+    <div onClick={editBook} className="book_author">{author}</div>
+    <Stars stars={stars} update={(stars) => updateBook({ stars })} />
   </div>
-)
-
-export default function Book({ img, title, author, stars, updateBook }) {
-  return (
-    <div className="book">
-      <div className="book_pic"><img src={`/books/${img}`} alt="cover" /></div>
-      <div className="book_title">{title}</div>
-      <div className="book_author">{author}</div>
-      <Stars stars={stars} update={(stars) => updateBook({ stars })} />
-    </div>
-  );
-}
+);
