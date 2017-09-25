@@ -4,11 +4,11 @@ import { AddBook } from './AddBook';
 import { NavMenu } from './NavMenu';
 import { Categories } from './Categories';
 
-export const Sidebar = ({ history, openPopup }) => (
+export const Sidebar = ({ history, openPopup, categories, setCategory }) => (
   <sidebar>
     <AddBook onClick={openPopup} />
     <NavMenu />
-    <Categories />
+    <Categories setCategory={setCategory} categories={categories} />
     <History messages={history} />
   </sidebar>
 );

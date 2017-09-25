@@ -15,6 +15,8 @@ class App extends Component {
       books: [],
       history: [],
       filters: [],
+      categories: [],
+      activeCategory: null,
       search: '',
       popup: false,
     }
@@ -24,6 +26,7 @@ class App extends Component {
     const params = {
       id,
       search: this.state.search || null,
+      activeCategory: this.state.activeCategory,
       filters: getActiveFilter(this.state), ...data
     };
     api.updateBook(params, ({ history, books }) => this.setState({ history, books }));
@@ -33,6 +36,7 @@ class App extends Component {
     const params = {
       search,
       filters: getActiveFilter(this.state),
+      activeCategory: this.state.activeCategory,
     };
     api.search(params, ({ books }) => this.setState({ search, books }));
   }
@@ -47,14 +51,25 @@ class App extends Component {
     const params = {
       search: this.state.search || null,
       filters: getActiveFilter(newFilters),
+      activeCategory: this.state.activeCategory,
     };
     api.setFilter(params, ({ books }) => this.setState({ filters: newFilters, books }));
+  }
+
+  setCategory = (id) => {
+    const params = {
+      search: this.state.search || null,
+      filters: getActiveFilter(this.state),
+      activeCategory: id,
+    };
+    api.setCategory(params, ({ books }) => this.setState({ activeCategory: id, books }));
   }
 
   addBook(data) {
     const params = {
       search: this.state.search || null,
       filters: getActiveFilter(this.state),
+      activeCategory: this.state.activeCategory,
       ...data,
     };
     api.addBook(params, ({ history, books }) => this.setState({ history, books }));
@@ -62,7 +77,8 @@ class App extends Component {
 
   componentDidMount() {
     api.getInitData(this.state.search, ({ filters, books }) => this.setState({ filters, books }));
-    api.getHistoryData(history => this.setState({ history }))
+    api.getHistoryData(history => this.setState({ history }));
+    api.getCategoriesData(categories => this.setState({ categories }));
   }
 
   closePopup = (type, book, id) => {
@@ -78,7 +94,12 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <Sidebar history={this.state.history} openPopup={() => this.setState({ popup: { type: 'add' } })} />
+        <Sidebar
+          history={this.state.history}
+          setCategory={this.setCategory}
+          categories={this.state.categories}
+          openPopup={() => this.setState({ popup: { type: 'add' } })}
+        />
         <ContentContainer
           books={this.state.books}
           filters={this.state.filters}

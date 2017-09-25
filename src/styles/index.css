@@ -245,27 +245,15 @@ sidebar {
   padding-top: 30px;
 }
 
+.side_categories a:hover {
+  text-decoration: underline;
+}
+
 .side_categories li {
   cursor: pointer;
   margin-left: 40px;
   list-style-type: disc;
   margin-bottom: 26px;
-}
-
-li.red {
-  color: #ff517e;
-}
-
-li.yellow {
-  color: #ffb700;
-}
-
-li.blue {
-  color: #03bedf;
-}
-
-li.purple {
-  color: #847ede;
 }
 
 .side_categories li span {
@@ -545,6 +533,18 @@ a#settings_button div {
   overflow: auto;
   min-width: 490px;
   z-index: 10;
+  overflow-x: hidden;
+}
+
+.popup_inner::-webkit-scrollbar {
+  width: 5px;
+  height: 3px;
+  background-color: white;
+}
+
+.popup_inner::-webkit-scrollbar-thumb {
+  background-color: #ef7d58;
+  border-radius: 100px;
 }
 
 #preview {
@@ -572,6 +572,7 @@ a#settings_button div {
 }
 
 .popup_inner input[type="text"] {
+  display: block;
   width: 90%;
   border-radius: 5px;
   font-size: 16px;
