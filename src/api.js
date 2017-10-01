@@ -27,6 +27,7 @@ export const api = {
         ];
         const params = {
           search: search || null,
+          activeCategory: null,
           filters: getActiveFilter({ filters }),
         };
         fetch(`http://localhost:${PORT}/api/books?` + concatUrlParams(params))
