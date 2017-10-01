@@ -27,7 +27,7 @@ class App extends Component {
       id,
       search: this.state.search || null,
       activeCategory: this.state.activeCategory,
-      filters: getActiveFilter(this.state), ...data
+      activeFilter: getActiveFilter(this.state), ...data
     };
     api.updateBook(params, ({ history, books }) => this.setState({ history, books }));
   }
@@ -35,7 +35,7 @@ class App extends Component {
   search = (search) => {
     const params = {
       search,
-      filters: getActiveFilter(this.state),
+      activeFilter: getActiveFilter(this.state),
       activeCategory: this.state.activeCategory,
     };
     api.getBooks(params, ({ books }) => this.setState({ search, books }));
@@ -50,7 +50,7 @@ class App extends Component {
     };
     const params = {
       search: this.state.search || null,
-      filters: getActiveFilter(newFilters),
+      activeFilter: getActiveFilter(newFilters),
       activeCategory: this.state.activeCategory,
     };
     api.getBooks(params, ({ books }) => this.setState({ filters: newFilters, books }));
@@ -59,7 +59,7 @@ class App extends Component {
   setCategory = (id) => {
     const params = {
       search: this.state.search || null,
-      filters: getActiveFilter(this.state),
+      activeFilter: getActiveFilter(this.state),
       activeCategory: id,
     };
     api.getBooks(params, ({ books }) => this.setState({ activeCategory: id, books }));
@@ -68,7 +68,7 @@ class App extends Component {
   addBook(data) {
     const params = {
       search: this.state.search || null,
-      filters: getActiveFilter(this.state),
+      activeFilter: getActiveFilter(this.state),
       activeCategory: this.state.activeCategory,
       ...data,
     };
