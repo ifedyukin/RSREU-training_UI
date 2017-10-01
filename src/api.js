@@ -1,15 +1,14 @@
 import { getActiveFilter, concatUrlParams } from './utils';
 
+const PORT = '8080';
+
 export const api = {
-  getHistoryData: (callback) => (
-    fetch('http://localhost:3000/get-history-api/')
-      .then(response => callback([
-        { id: 1, move: 'added', book: 'The Trial', author: 'Franz Kafka', text: 'to your Must Read Titles', time: '2 years' },
-        { id: 2, move: 'added', book: 'Fight Club', author: 'Chuck Palahniuk', text: 'to your Must Read Titles', time: '2 years' },
-      ]))
-  ),
+  getHistoryData: (callback) => callback([
+    { id: 1, move: 'added', book: 'The Trial', author: 'Franz Kafka', text: 'to your Must Read Titles', time: '2 years' },
+    { id: 2, move: 'added', book: 'Fight Club', author: 'Chuck Palahniuk', text: 'to your Must Read Titles', time: '2 years' },
+  ]),
   getCategoriesData: (callback) => (
-    fetch('http://localhost:3000/get-categories-api/')
+    fetch(`http://localhost:${PORT}/api/categories`)
       .then(response => callback([
         { id: 1, title: 'Must Read Titles', color: '#ff517e' },
         { id: 2, title: 'Best Of List', color: '#ffb700' },
@@ -18,7 +17,7 @@ export const api = {
       ]))
   ),
   getInitData: (search, callback) => (
-    fetch('http://localhost:3000/get-filters-api/')
+    fetch(`http://localhost:${PORT}/api/filters`)
       .then(response => {
         const filters = [
           { id: 1, title: 'All Books', active: true },
@@ -30,7 +29,7 @@ export const api = {
           search: search || null,
           filters: getActiveFilter({ filters }),
         };
-        fetch('http://localhost:3000/get-books-api/?' + concatUrlParams(params))
+        fetch(`http://localhost:${PORT}/api/books?` + concatUrlParams(params))
           .then(response => {
             const books = [
               { id: 1, title: 'Jewels of Nizam', author: 'Geeta Devi', img: 'JewelsOfNizam.jpg', stars: 5, labels: 'label1' },
@@ -53,16 +52,8 @@ export const api = {
     fetch('http://localhost:3000/update-book-api/?' + concatUrlParams(params))
       .then(response => callback({ history: response.history, books: response.books }))
   ),
-  search: (params, callback) => (
-    fetch('http://localhost:3000/search-api/?' + concatUrlParams(params))
-      .then(response => callback({ books: response }))
-  ),
-  setFilter: (params, callback) => (
-    fetch('http://localhost:3000/set-filter-api/?' + concatUrlParams(params))
-      .then(response => callback({ books: response }))
-  ),
-  setCategory: (params, callback) => (
-    fetch('http://localhost:3000/set-category-api/?' + concatUrlParams(params))
+  getBooks: (params, callback) => (
+    fetch(`http://localhost:${PORT}/api/books?` + concatUrlParams(params))
       .then(response => callback({ books: response }))
   ),
   addBook: (params, callback) => (
