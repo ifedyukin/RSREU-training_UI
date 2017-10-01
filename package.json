@@ -6,6 +6,7 @@
     "type": "git",
     "url": "git+https://github.com/ifedyukin/RSREU-training_UI.git"
   },
+  "homepage": "",
   "author": "Igor Fedyukin",
   "dependencies": {
     "react": "^15.6.1",
