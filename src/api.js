@@ -1,4 +1,4 @@
-import { getActiveFilter, concatUrlParams } from './utils';
+import { getActiveFilter, concatUrlParams, filterNotNullParams } from './utils';
 
 const PORT = window.location.port;
 const isDebug = window.location.search === '?debug';
@@ -55,10 +55,14 @@ export const api = {
   updateBook: (params, callback) => (
     fetch(`http://localhost:${PORT}/api/book`, {
       method: 'POST',
-      body: {
-        action: 'update',
-        ...params,
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
       },
+      body: JSON.stringify({
+        action: 'update',
+        ...filterNotNullParams(params),
+      }),
     })
       .then(response => response.json())
       .then(response => callback({ books: response }))
@@ -71,10 +75,14 @@ export const api = {
   addBook: (params, callback) => (
     fetch(`http://localhost:${PORT}/api/book`, {
       method: 'POST',
-      body: {
-        action: 'create',
-        ...params,
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
       },
+      body: JSON.stringify({
+        action: 'create',
+        ...filterNotNullParams(params),
+      }),
     })
       .then(response => response.json())
       .then(response => callback({ books: response }))
@@ -82,10 +90,14 @@ export const api = {
   deleteBook: (params, callback) => (
     fetch(`http://localhost:${PORT}/api/book`, {
       method: 'POST',
-      body: {
-        action: 'delete',
-        ...params,
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
       },
+      body: JSON.stringify({
+        action: 'delete',
+        ...filterNotNullParams(params),
+      }),
     })
       .then(response => response.json())
       .then(response => callback({ books: response }))

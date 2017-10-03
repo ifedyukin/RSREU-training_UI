@@ -56,7 +56,7 @@ export class Popup extends React.Component {
           <form onSubmit={this.onSubmit}>
             <label>Title: <input value={this.state.title} onChange={e => this.setState({ title: e.target.value })} type="text" required /></label><br />
             <label>Author: <input value={this.state.author} onChange={e => this.setState({ author: e.target.value })} type="text" required /></label><br />
-            <label>keywords: <input value={this.state.keywords} onChange={e => this.setState({ keywords: e.target.value })} type="text" required /></label><br />
+            <label>Keywords: <input value={this.state.keywords} onChange={e => this.setState({ keywords: e.target.value })} type="text" /></label><br />
             <label>Cover: <input onChange={this.onCoverChange.bind(this, reader)} accept="image/*" type="file" required={type === 'add'} /></label><br />
             <img
               src={type === 'edit' ? `/books/${this.props.data.img}` : null}
