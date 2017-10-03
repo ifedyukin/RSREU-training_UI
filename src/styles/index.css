@@ -590,7 +590,7 @@ a#settings_button div {
   font-size: 16px;
   border: none;
   cursor: pointer;
-  width: 150px;
+  width: 100px;
   margin: 0 10px;
   border-radius: 5px;
 }
@@ -606,7 +606,7 @@ a#settings_button div {
 
 .popup_inner .buttons {
   margin: 0 auto;
-  width: 340px;
+  width: 365px;
 }
 
 .popup_inner label {

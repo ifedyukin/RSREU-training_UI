@@ -1,6 +1,7 @@
 import { getActiveFilter, concatUrlParams } from './utils';
 
-const PORT = '8080';
+const PORT = window.location.port;
+const isDebug = window.location.search === '?debug';
 
 export const api = {
   getHistoryData: (callback) => callback([
@@ -9,30 +10,33 @@ export const api = {
   ]),
   getCategoriesData: (callback) => (
     fetch(`http://localhost:${PORT}/api/categories`)
-      .then(response => callback([
+      .then(response => response.json())
+      .then(response => isDebug ? callback([
         { type: 'must_read', title: 'Must Read Titles', color: '#ff517e' },
         { type: 'best', title: 'Best Of List', color: '#ffb700' },
         { type: 'classic', title: 'Classic Novels', color: '#03bedf' },
         { type: 'non_fiction', title: 'Non Fiction', color: '#847ede' },
-      ]))
+      ]) : callback(response))
   ),
   getInitData: (search, callback) => (
     fetch(`http://localhost:${PORT}/api/filters`)
+      .then(response => response.json())
       .then(response => {
-        const filters = [
+        const filters = isDebug ? [
           { type: 'all', title: 'All Books', active: true },
           { type: 'recent', title: 'Most Recent', active: false },
           { type: 'popular', title: 'Most Popular', active: false },
           { type: 'free', title: 'Free Books', active: false },
-        ];
+        ] : response;
         const params = {
           search: search || null,
           activeCategory: null,
           activeFilter: getActiveFilter({ filters }),
         };
         fetch(`http://localhost:${PORT}/api/books?` + concatUrlParams(params))
+          .then(response => response.json())
           .then(response => {
-            const books = [
+            const books = isDebug ? [
               { _id: 1, title: 'Jewels of Nizam', author: 'Geeta Devi', img: 'JewelsOfNizam.jpg', rating: 5, cost: 0, keywords: '', categories: '', },
               { _id: 2, title: 'Cakes & Bakes', author: 'Sanjeev Kapoor', img: 'CakesAndBakes.jpg', rating: 5, cost: 0, keywords: '', categories: '', },
               { _id: 3, title: 'Jamie\'s Kitchen', author: 'Jamie Oliver', img: 'JamiesKitchen.jpg', rating: 4, cost: 0, keywords: '', categories: '', },
@@ -43,43 +47,47 @@ export const api = {
               { _id: 8, title: 'Jamie Does', author: 'Jamie Oliver', img: 'JamieDoes.jpg', rating: 3, cost: 0, keywords: '', categories: '', },
               { _id: 9, title: 'Jamie\'s Italy', author: 'Jamie Oliver', img: 'JamiesItaly.jpg', rating: 5, cost: 0, keywords: '', categories: '', },
               { _id: 10, title: 'Vegetables Cookbook', author: 'Matthew Biggs', img: 'VegetablesCookbook.jpg', rating: 3, cost: 0, keywords: '', categories: '', }
-            ];
+            ] : response;
             callback({ filters, books });
           });
       })
   ),
   updateBook: (params, callback) => (
-    fetch(`http://localhost:${PORT}/api/books`, {
+    fetch(`http://localhost:${PORT}/api/book`, {
       method: 'POST',
       body: {
         action: 'update',
         ...params,
       },
     })
+      .then(response => response.json())
       .then(response => callback({ books: response }))
   ),
   getBooks: (params, callback) => (
     fetch(`http://localhost:${PORT}/api/books?` + concatUrlParams(params))
+      .then(response => response.json())
       .then(response => callback({ books: response }))
   ),
   addBook: (params, callback) => (
-    fetch(`http://localhost:${PORT}/api/books`, {
+    fetch(`http://localhost:${PORT}/api/book`, {
       method: 'POST',
       body: {
         action: 'create',
         ...params,
       },
     })
+      .then(response => response.json())
       .then(response => callback({ books: response }))
   ),
   deleteBook: (params, callback) => (
-    fetch(`http://localhost:${PORT}/api/books`, {
+    fetch(`http://localhost:${PORT}/api/book`, {
       method: 'POST',
       body: {
         action: 'delete',
         ...params,
       },
     })
+      .then(response => response.json())
       .then(response => callback({ books: response }))
   ),
 };
