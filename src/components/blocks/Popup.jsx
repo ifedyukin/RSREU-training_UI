@@ -22,7 +22,7 @@ export class Popup extends React.Component {
   onSubmit = (e) => {
     const { closePopup, type, data = {} } = this.props;
     e.preventDefault();
-    closePopup(type, this.state, data.id);
+    closePopup(type, this.state, data._id);
   }
 
   onCoverChange = (reader, e) => {
@@ -33,6 +33,12 @@ export class Popup extends React.Component {
   closeForm = (e) => {
     e.preventDefault();
     this.props.closePopup(null);
+  }
+
+  deleteBook = (e) => {
+    e.preventDefault();
+    const { closePopup, data = {} } = this.props;
+    closePopup('delete', null, data._id);
   }
 
   render() {
@@ -62,6 +68,7 @@ export class Popup extends React.Component {
             /><br />
             <div className="buttons">
               <input type="submit" value="Submit" />
+              <button onClick={this.deleteBook}>Delete</button>
               <button onClick={this.closeForm}>Cancel</button>
             </div>
           </form>

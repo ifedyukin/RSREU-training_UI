@@ -22,14 +22,14 @@ class App extends Component {
     }
   }
 
-  updateBook = (id, data) => {
+  updateBook = (_id, data) => {
     const params = {
-      id,
+      _id,
       search: this.state.search || null,
       activeCategory: this.state.activeCategory,
       activeFilter: getActiveFilter(this.state), ...data
     };
-    api.updateBook(params, ({ history, books }) => this.setState({ history, books }));
+    api.updateBook(params, ({ books }) => this.setState({ books }));
   }
 
   search = (search) => {
@@ -41,28 +41,26 @@ class App extends Component {
     api.getBooks(params, ({ books }) => this.setState({ search, books }));
   }
 
-  setFilter = (id) => {
-    const newFilters = {
-      filters: this.state.filters.map(filter => ({
-        ...filter,
-        active: filter.id === id,
-      }))
-    };
+  setFilter = (type) => {
+    const newFilters = this.state.filters.map(filter => ({
+      ...filter,
+      active: filter.type === type,
+    }));
     const params = {
       search: this.state.search || null,
-      activeFilter: getActiveFilter(newFilters),
+      activeFilter: getActiveFilter({ filters: newFilters }),
       activeCategory: this.state.activeCategory,
     };
     api.getBooks(params, ({ books }) => this.setState({ filters: newFilters, books }));
   }
 
-  setCategory = (id) => {
+  setCategory = (type) => {
     const params = {
       search: this.state.search || null,
       activeFilter: getActiveFilter(this.state),
-      activeCategory: id,
+      activeCategory: type,
     };
-    api.getBooks(params, ({ books }) => this.setState({ activeCategory: id, books }));
+    api.getBooks(params, ({ books }) => this.setState({ activeCategory: type, books }));
   }
 
   addBook(data) {
@@ -72,7 +70,17 @@ class App extends Component {
       activeCategory: this.state.activeCategory,
       ...data,
     };
-    api.addBook(params, ({ history, books }) => this.setState({ history, books }));
+    api.addBook(params, ({ books }) => this.setState({ books }));
+  }
+
+  deleteBook(_id) {
+    const params = {
+      search: this.state.search || null,
+      activeFilter: getActiveFilter(this.state),
+      activeCategory: this.state.activeCategory,
+      _id,
+    };
+    api.deleteBook(params, ({ books }) => this.setState({ books }));
   }
 
   componentDidMount() {
@@ -84,6 +92,8 @@ class App extends Component {
   closePopup = (type, book, id) => {
     if (type === 'add') {
       this.addBook(book);
+    } else if (type === 'delete') {
+      this.deleteBook(id);
     } else if (type === 'edit') {
       this.updateBook(id, book);
     }
