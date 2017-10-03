@@ -4,6 +4,5 @@ export const getActiveFilter = state => {
 }
 
 export const concatUrlParams = params => Object.keys(params)
-  .map(param => params[param] ? encodeURIComponent(param) + '=' + encodeURIComponent(params[param]) : null)
-  .filter(p => p)
+  .map(param => params[param] ? encodeURIComponent(param) + '=' + encodeURIComponent(params[param]) : '')
   .join('&');
