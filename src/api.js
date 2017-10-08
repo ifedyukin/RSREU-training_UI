@@ -37,16 +37,16 @@ export const api = {
           .then(response => response.json())
           .then(response => {
             const books = isDebug ? [
-              { _id: 1, title: 'Jewels of Nizam', author: 'Geeta Devi', img: 'JewelsOfNizam.jpg', rating: 5, cost: 0, keywords: '', categories: '', },
-              { _id: 2, title: 'Cakes & Bakes', author: 'Sanjeev Kapoor', img: 'CakesAndBakes.jpg', rating: 5, cost: 0, keywords: '', categories: '', },
-              { _id: 3, title: 'Jamie\'s Kitchen', author: 'Jamie Oliver', img: 'JamiesKitchen.jpg', rating: 4, cost: 0, keywords: '', categories: '', },
-              { _id: 4, title: 'Inexpensive Family Meals', author: 'Simon Holst', img: 'InexpensiveFamilyMeals.jpg', rating: 3, cost: 0, keywords: '', categories: '', },
-              { _id: 5, title: 'Paleo Slow Cooking', author: 'Chrissy Gawer', img: 'PaleoSlowCooking.jpg', rating: 4, cost: 0, keywords: '', categories: '', },
-              { _id: 6, title: 'Cook Like an Italian', author: 'Toble Puttock', img: 'CookLikeAnItalian.jpg', rating: 3, cost: 0, keywords: '', categories: '', },
-              { _id: 7, title: 'Suneeta Vaswani', author: 'Geeta Devi', img: 'SuneetaVaswani.jpg', rating: 5, cost: 0, keywords: '', categories: '', },
-              { _id: 8, title: 'Jamie Does', author: 'Jamie Oliver', img: 'JamieDoes.jpg', rating: 3, cost: 0, keywords: '', categories: '', },
-              { _id: 9, title: 'Jamie\'s Italy', author: 'Jamie Oliver', img: 'JamiesItaly.jpg', rating: 5, cost: 0, keywords: '', categories: '', },
-              { _id: 10, title: 'Vegetables Cookbook', author: 'Matthew Biggs', img: 'VegetablesCookbook.jpg', rating: 3, cost: 0, keywords: '', categories: '', }
+              { _id: 1, title: 'Jewels of Nizam', author: { firstName: 'Geeta', lastName: 'Devi'}, img: 'JewelsOfNizam.jpg', rating: 5, cost: 0, keywords: '', categories: '', },
+              { _id: 2, title: 'Cakes & Bakes', author: { firstName: 'Sanjeev', lastName: 'Kapoor'}, img: 'CakesAndBakes.jpg', rating: 5, cost: 0, keywords: '', categories: '', },
+              { _id: 3, title: 'Jamie\'s Kitchen', author: { firstName: 'Jamie', lastName: 'Oliver'}, img: 'JamiesKitchen.jpg', rating: 4, cost: 0, keywords: '', categories: '', },
+              { _id: 4, title: 'Inexpensive Family Meals', author: { firstName: 'Simon', lastName: 'Holst'}, img: 'InexpensiveFamilyMeals.jpg', rating: 3, cost: 0, keywords: '', categories: '', },
+              { _id: 5, title: 'Paleo Slow Cooking', author: { firstName: 'Chrissy', lastName: 'Gawer'}, img: 'PaleoSlowCooking.jpg', rating: 4, cost: 0, keywords: '', categories: '', },
+              { _id: 6, title: 'Cook Like an Italian', author: { firstName: 'Toble', lastName: 'Puttock'}, img: 'CookLikeAnItalian.jpg', rating: 3, cost: 0, keywords: '', categories: '', },
+              { _id: 7, title: 'Suneeta Vaswani', author: { firstName: 'Geeta', lastName: 'Devi'}, img: 'SuneetaVaswani.jpg', rating: 5, cost: 0, keywords: '', categories: '', },
+              { _id: 8, title: 'Jamie Does', author: { firstName: 'Jamie', lastName: 'Oliver'}, img: 'JamieDoes.jpg', rating: 3, cost: 0, keywords: '', categories: '', },
+              { _id: 9, title: 'Jamie\'s Italy', author: { firstName: 'Jamie', lastName: 'Oliver'}, img: 'JamiesItaly.jpg', rating: 5, cost: 0, keywords: '', categories: '', },
+              { _id: 10, title: 'Vegetables Cookbook', author: { firstName: 'Matthew', lastName: 'Biggs'}, img: 'VegetablesCookbook.jpg', rating: 3, cost: 0, keywords: '', categories: '', }
             ] : response;
             callback({ filters, books });
           });

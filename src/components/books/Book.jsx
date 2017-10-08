@@ -5,7 +5,7 @@ export const Book = ({ img, title, author, rating, updateBook, editBook }) => (
   <div className="book">
     <div onClick={editBook} className="book_pic"><img src={`/books/${img}`} alt="cover" /></div>
     <div onClick={editBook} className="book_title">{title}</div>
-    <div onClick={editBook} className="book_author">{author}</div>
+    <div onClick={editBook} className="book_author">{`${author.firstName} ${author.lastName}`}</div>
     <Stars stars={rating} update={(stars) => updateBook({ rating })} />
   </div>
 );
