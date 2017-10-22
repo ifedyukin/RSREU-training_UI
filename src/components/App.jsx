@@ -5,7 +5,7 @@ import { ContentContainer } from './content/ContentContainer';
 import { Footer } from './blocks/Footer';
 import { Popup } from './blocks/Popup';
 import { api } from '../api.js';
-import { getActiveFilter } from '../utils.js';
+import { getActiveFilter, debounce } from '../utils.js';
 
 class App extends Component {
   constructor() {
@@ -20,6 +20,12 @@ class App extends Component {
       search: '',
       popup: false,
     }
+
+    this.debounceSearch = debounce(this.search, 500);
+    this.search = (search) => {
+      this.setState({ search });
+      this.debounceSearch(search);
+    }
   }
 
   updateBook = (_id, data) => {
@@ -27,18 +33,19 @@ class App extends Component {
       _id,
       search: this.state.search || null,
       activeCategory: this.state.activeCategory,
-      activeFilter: getActiveFilter(this.state), ...data
+      activeFilter: getActiveFilter(this.state),
+      book: data,
     };
     api.updateBook(params, ({ books }) => this.setState({ books }));
   }
 
   search = (search) => {
     const params = {
-      search,
+      search: this.state.search,
       activeFilter: getActiveFilter(this.state),
       activeCategory: this.state.activeCategory,
     };
-    api.getBooks(params, ({ books }) => this.setState({ search, books }));
+    api.getBooks(params, ({ books }) => this.setState({ books }));
   }
 
   setFilter = (type) => {
@@ -68,7 +75,7 @@ class App extends Component {
       search: this.state.search || null,
       activeFilter: getActiveFilter(this.state),
       activeCategory: this.state.activeCategory,
-      ...data,
+      book: data,
     };
     api.addBook(params, ({ books }) => this.setState({ books }));
   }

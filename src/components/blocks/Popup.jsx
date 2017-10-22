@@ -22,7 +22,7 @@ export class Popup extends React.Component {
   onSubmit = (e) => {
     const { closePopup, type, data = {} } = this.props;
     e.preventDefault();
-    closePopup(type, this.state, data._id);
+    closePopup(type, { ...data, ...this.state }, data._id);
   }
 
   onCoverChange = (reader, e) => {
